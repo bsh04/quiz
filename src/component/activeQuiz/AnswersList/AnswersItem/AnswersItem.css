@@ -1,0 +1,31 @@
+.answers-item {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  transition: 0.3s background-color;
+  cursor: pointer;
+}
+.answers-item:hover {
+  background-color: #f1f1f1;
+  transition: 0.3s background-color;
+}
+
+.error {
+  background-color: #ff4751;
+  color: black;
+}
+.error:hover {
+  background-color: red;
+}
+
+.success {
+  background-color: #02bd1e;
+  color: black;
+}
+.success:hover {
+  background-color: #02d922;
+}
+
+/*# sourceMappingURL=AnswersItem.css.map */

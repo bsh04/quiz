@@ -1,0 +1,32 @@
+.answers-item {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  transition: .3s background-color;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f1f1;
+    transition: .3s background-color;
+  }
+}
+
+.error {
+  background-color: #ff4751;
+  color: black;
+
+  &:hover {
+    background-color: red;
+  }
+}
+
+.success {
+  background-color: #02bd1e;
+  color: black;
+
+  &:hover {
+    background-color: #02d922;
+  }
+}

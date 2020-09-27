@@ -1,0 +1,15 @@
+.quiz {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  width: 100%;
+  background-color: #fff;
+
+  & h1 {
+    color: black;
+  }
+}
+
+.quiz-wrapper {
+  width: 700px;
+}
