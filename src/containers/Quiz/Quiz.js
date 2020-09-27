@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import './Quiz.scss'
 import ActiveQuiz from "../../component/activeQuiz/activeQuiz";
+import FinishedQuiz from "../../component/finishedQuiz/finishedQuiz";
 
 class Quiz extends Component {
 
     state = {
         activeQuestion: 0,
         answerState: null,
+        isFinished: false,
         quiz: [
             {
                 question: 'Какого цвета небо',
@@ -37,30 +39,33 @@ class Quiz extends Component {
                     {id: 3, text: 'Бычок'},
                     {id: 4, text: 'Груздь'},
                 ]
+            },
+        ],
+        correctAnswersCounter: 0
+    }
+
+    toggleQuiz = () => {
+        const timeout = window.setTimeout(() => {
+
+            if (this.state.activeQuestion + 1 === this.state.quiz.length) {
+                this.setState({isFinished: true})
+            } else {
+                this.setState({activeQuestion: this.state.activeQuestion + 1, answerState: null})
             }
-        ]
+
+            window.clearTimeout(timeout)
+        }, 500)
     }
 
     handleAnswer = (id) => {
 
         if (this.state.quiz[this.state.activeQuestion].rightAnswer === id) {
-
-            this.setState({answerState: {[id]: 'success'}})
-
-            const timeout = window.setTimeout(() => {
-
-                if (this.state.activeQuestion + 1 === this.state.quiz.length) {
-                    console.log('finished')
-                } else {
-                    this.setState({activeQuestion: this.state.activeQuestion + 1, answerState: null})
-                }
-
-                window.clearTimeout(timeout)
-            }, 500)
-
+            this.setState({answerState: {[id]: 'success'}, correctAnswersCounter: this.state.correctAnswersCounter + 1})
+            this.toggleQuiz()
 
         } else {
             this.setState({answerState: {[id]: 'error'}})
+            this.toggleQuiz()
         }
     }
 
@@ -69,14 +74,22 @@ class Quiz extends Component {
             <div className='quiz'>
                 <div className='quiz-wrapper'>
                     <h1>Тестовое задание</h1>
-                    <ActiveQuiz
-                        answers={this.state.quiz[this.state.activeQuestion].answers}
-                        question={this.state.quiz[this.state.activeQuestion].question}
-                        handleClick={this.handleAnswer}
-                        quizLength={this.state.quiz.length}
-                        answerNumber={this.state.activeQuestion + 1}
-                        state={this.state.answerState}
-                    />
+                    {
+                        this.state.isFinished
+                            ? <FinishedQuiz
+                                correctAnswersCounter={this.state.correctAnswersCounter}
+                                quizLength={this.state.quiz.length}
+                            />
+                            :
+                            <ActiveQuiz
+                                answers={this.state.quiz[this.state.activeQuestion].answers}
+                                question={this.state.quiz[this.state.activeQuestion].question}
+                                handleClick={this.handleAnswer}
+                                quizLength={this.state.quiz.length}
+                                answerNumber={this.state.activeQuestion + 1}
+                                state={this.state.answerState}
+                            />
+                    }
                 </div>
             </div>
         );
