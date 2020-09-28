@@ -6,6 +6,7 @@ import FinishedQuiz from "../../component/finishedQuiz/finishedQuiz";
 class Quiz extends Component {
 
     state = {
+        result: [],
         activeQuestion: 0,
         answerState: null,
         isFinished: false,
@@ -13,6 +14,7 @@ class Quiz extends Component {
             {
                 question: 'Какого цвета небо',
                 rightAnswer: 1,
+                id: 1,
                 answers: [
                     {id: 1, text: 'Синий'},
                     {id: 2, text: 'Красный'},
@@ -23,6 +25,7 @@ class Quiz extends Component {
             {
                 question: 'Столица России',
                 rightAnswer: 3,
+                id: 2,
                 answers: [
                     {id: 1, text: 'Томск'},
                     {id: 2, text: 'Новосибирск'},
@@ -33,6 +36,7 @@ class Quiz extends Component {
             {
                 question: 'Что не является грибом',
                 rightAnswer: 2,
+                id: 3,
                 answers: [
                     {id: 1, text: 'Маслёнок'},
                     {id: 2, text: 'Огурец'},
@@ -59,14 +63,30 @@ class Quiz extends Component {
 
     handleAnswer = (id) => {
 
-        if (this.state.quiz[this.state.activeQuestion].rightAnswer === id) {
-            this.setState({answerState: {[id]: 'success'}, correctAnswersCounter: this.state.correctAnswersCounter + 1})
+        const question = this.state.quiz[this.state.activeQuestion]
+        const result = this.state.result
+
+        if (question.rightAnswer === id) {
+            if (!result[id]) {
+                result[question.id] = 'success'
+            }
+            this.setState({answerState: {[id]: 'success'}, correctAnswersCounter: this.state.correctAnswersCounter + 1, result: result})
             this.toggleQuiz()
 
         } else {
-            this.setState({answerState: {[id]: 'error'}})
+            result[question.id] = 'error'
+            this.setState({answerState: {[id]: 'error'}, result: result})
             this.toggleQuiz()
         }
+    }
+
+    retryHandler = () => {
+        this.setState({
+            result: [],
+            activeQuestion: 0,
+            answerState: null,
+            isFinished: false,
+        })
     }
 
     render() {
@@ -79,6 +99,9 @@ class Quiz extends Component {
                             ? <FinishedQuiz
                                 correctAnswersCounter={this.state.correctAnswersCounter}
                                 quizLength={this.state.quiz.length}
+                                result={this.state.result}
+                                quiz={this.state.quiz}
+                                Retry={this.retryHandler}
                             />
                             :
                             <ActiveQuiz
