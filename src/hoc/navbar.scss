@@ -18,15 +18,17 @@
     margin: 0;
   }
 
-  & ul {
+  & .links {
     display: flex;
     align-items: center;
     padding-right: 40px;
 
-    & li {
+    & .link {
       padding: 0 10px;
       list-style: none;
       cursor: pointer;
+      text-decoration: none;
+      color: black
     }
   }
 }
