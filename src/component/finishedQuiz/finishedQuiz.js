@@ -30,7 +30,7 @@ const FinishedQuiz = (props) => {
                 }
             </ul>
             <p>Вы ответили првильно на {props.correctAnswersCounter} из {props.quizLength} ({percent} %)</p>
-            <button onClick={() => props.Retry()}>
+            <button onClick={props.Retry}>
                 Перепройти тест
             </button>
         </div>

@@ -93,7 +93,7 @@ class Quiz extends Component {
         return (
             <div className='quiz'>
                 <div className='quiz-wrapper'>
-                    <h1>Тестовое задание</h1>
+                    <h1>Первое тестовое задание</h1>
                     {
                         this.state.isFinished
                             ? <FinishedQuiz
